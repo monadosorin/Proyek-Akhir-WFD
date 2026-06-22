@@ -54,10 +54,13 @@
                                 </div>
                             @endif
                             @if ($booking->status === 'pending')
-                                <form method="POST" action="{{ route('bookings.cancel', $booking) }}" onsubmit="return confirm('Batalkan booking ini?')" class="mt-3">
-                                    @csrf @method('DELETE')
-                                    <button class="text-sm text-red-600 hover:underline">Batalkan booking</button>
-                                </form>
+                                <div class="mt-3 flex gap-3 items-center">
+                                    <a href="{{ route('bookings.edit', $booking) }}" class="text-sm text-indigo-600 hover:underline">Edit booking</a>
+                                    <form method="POST" action="{{ route('bookings.cancel', $booking) }}" onsubmit="return confirm('Batalkan booking ini?')">
+                                        @csrf @method('DELETE')
+                                        <button class="text-sm text-red-600 hover:underline">Batalkan booking</button>
+                                    </form>
+                                </div>
                             @endif
                         </div>
                     @endforeach

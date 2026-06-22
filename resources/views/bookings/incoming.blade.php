@@ -52,10 +52,21 @@
                                         <button class="px-3 py-1.5 text-sm bg-red-600 text-white rounded hover:bg-red-500">Tolak</button>
                                     </form>
                                 </div>
-                            @elseif (in_array($booking->status, ['approved', 'done']))
-                                <a href="{{ route('catatan.edit', $booking) }}" class="mt-3 inline-block text-sm text-indigo-600 hover:underline">
-                                    {{ $booking->catatan ? 'Lihat/Edit Catatan' : 'Isi Catatan Bimbingan' }}
-                                </a>
+                            @elseif ($booking->status === 'approved')
+                                <div class="mt-4">
+                                    <a href="{{ route('catatan.edit', $booking) }}"
+                                       class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold bg-green-600 text-white rounded-md hover:bg-green-500">
+                                        ✓ Bimbingan Selesai
+                                    </a>
+                                    <p class="text-xs text-gray-500 mt-1">Klik setelah sesi selesai untuk mengisi catatan bimbingan.</p>
+                                </div>
+                            @elseif ($booking->status === 'done')
+                                <div class="mt-4">
+                                    <a href="{{ route('catatan.edit', $booking) }}"
+                                       class="inline-flex items-center gap-2 px-3 py-1.5 text-sm border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
+                                        Lihat / Edit Catatan
+                                    </a>
+                                </div>
                             @elseif ($booking->status === 'rejected' && $booking->alasan_tolak)
                                 <div class="mt-3 text-sm text-red-700">Alasan ditolak: {{ $booking->alasan_tolak }}</div>
                             @endif

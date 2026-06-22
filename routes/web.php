@@ -52,6 +52,8 @@ Route::middleware(['auth', 'role:mahasiswa'])->group(function () {
     Route::get('/bookings', [BookingController::class, 'mineIndex'])->name('bookings.mine');
     Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
     Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+    Route::patch('/bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
     Route::delete('/bookings/{booking}', [BookingController::class, 'cancel'])->name('bookings.cancel');
 });
 

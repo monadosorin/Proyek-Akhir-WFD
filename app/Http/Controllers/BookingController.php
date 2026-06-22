@@ -51,6 +51,28 @@ class BookingController extends Controller
         return redirect()->route('bookings.mine')->with('status', 'Booking dikirim, menunggu persetujuan.');
     }
 
+    public function edit(Request $request, Booking $booking)
+    {
+        abort_if($booking->mahasiswa_id !== $request->user()->id, 403);
+        abort_if($booking->status !== 'pending', 422, 'Hanya booking pending yang dapat diedit.');
+        $booking->load('slot.dosen');
+        return view('bookings.edit', compact('booking'));
+    }
+
+    public function update(Request $request, Booking $booking)
+    {
+        abort_if($booking->mahasiswa_id !== $request->user()->id, 403);
+        abort_if($booking->status !== 'pending', 422, 'Hanya booking pending yang dapat diedit.');
+
+        $data = $request->validate([
+            'topik' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+        ]);
+
+        $booking->update($data);
+        return redirect()->route('bookings.mine')->with('status', 'Booking diperbarui.');
+    }
+
     public function cancel(Request $request, Booking $booking)
     {
         abort_if($booking->mahasiswa_id !== $request->user()->id, 403);
