@@ -28,7 +28,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'in:dosen,mahasiswa'],
-            'nrp_nip' => ['required', 'string', 'max:255'],
+            'nrp_nip' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'prodi' => ['required', 'string', 'max:255'],
         ]);
 

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['kaprodi', 'dosen', 'mahasiswa'])->default('mahasiswa');
-            $table->string('nrp_nip')->nullable();
-            $table->string('prodi')->nullable();
+            $table->string('nrp_nip')->unique();
+            $table->string('prodi');
             $table->foreignId('dosen_pembimbing_id')->nullable()->references('id')->on('users')->nullOnDelete();
             $table->unsignedInteger('quota')->nullable();
             $table->rememberToken();

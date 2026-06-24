@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" x-data="{ role: '{{ old('role', 'mahasiswa') }}' }">
         @csrf
 
         <div>
@@ -37,22 +37,26 @@
 
         <div class="mt-4">
             <x-input-label for="role" :value="__('Role')" />
-            <select id="role" name="role" required
+            <select id="role" name="role" required x-model="role"
                 class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
-                <option value="mahasiswa" {{ old('role') === 'dosen' ? '' : 'selected' }}>Mahasiswa</option>
-                <option value="dosen" {{ old('role') === 'dosen' ? 'selected' : '' }}>Dosen</option>
+                <option value="mahasiswa">Mahasiswa</option>
+                <option value="dosen">Dosen</option>
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <div class="mt-4">
-            <x-input-label for="nrp_nip" :value="__('NRP / NIP')" />
+            <label for="nrp_nip" class="block font-medium text-sm text-gray-700">
+                <span x-text="role === 'dosen' ? 'NIP' : 'NRP'"></span>
+            </label>
             <x-text-input id="nrp_nip" class="block mt-1 w-full" type="text" name="nrp_nip" :value="old('nrp_nip')" required />
             <x-input-error :messages="$errors->get('nrp_nip')" class="mt-2" />
         </div>
 
         <div class="mt-4">
-            <x-input-label for="prodi" :value="__('Program Studi')" />
+            <label for="prodi" class="block font-medium text-sm text-gray-700">
+                <span x-text="role === 'dosen' ? 'Program Studi yang Diampu' : 'Program Studi'"></span>
+            </label>
             <x-text-input id="prodi" class="block mt-1 w-full" type="text" name="prodi" :value="old('prodi')" />
             <x-input-error :messages="$errors->get('prodi')" class="mt-2" />
         </div>
